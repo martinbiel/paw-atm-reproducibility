@@ -191,7 +191,17 @@ Evaluation and expected result
 ------------------------------
 
 Following the instructions in `reproducibility.jl` should produce results akin to the ones
-presented in Fig. 2, Fig. 3, and Fig. 4.
+presented in Fig. 2, Fig. 3, and Fig. 4. These results are available as JSON files in the results folder of the paw-atm-reproducibility repository as well. The presented results can be regenerated as follows
+``` julia
+using Plots
+pyplot()
+serial_benchmark = load_results("results/serial_benchmarks.json")
+plot(TimePlot(serial_benchmark)) # Produces Fig. 2
+distributed_benchmark = load_results("results/distributed_benchmarks.json")
+plot(TimePlot(serial_benchmark)) # Produces Fig. 3
+plot(ScalingPlot(serial_benchmark)) # Produces Fig. 4
+
+```
 
 Experiment customization
 ------------------------

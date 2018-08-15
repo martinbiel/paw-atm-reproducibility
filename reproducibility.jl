@@ -81,6 +81,7 @@ scaling_8 = load_results!("scaling_8.json")
 distributed_benchmark.results["8"] = copy(scaling_8.results["1000"])
 scaling_16 = load_results!("scaling_16.json")
 distributed_benchmark.results["16"] = copy(scaling_16.results["1000"])
+save_results!(distributed_benchmark,"distributed_benchmarks.json")
 using Plots
 pyplot()
 p = plot(TimePlot(distributed_benchmark)) # Creates Fig. 3
