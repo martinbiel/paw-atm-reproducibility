@@ -72,7 +72,7 @@ Two datasets were used. First, `plantdata.csv` contains physical
 specifications for the hydroplants in the river Skellefteälven. This
 data was first published in , in Table 1 and Table 2. Second,
 `spotprices.csv` contains the hourly market price of electricity in the
-Nordic region during 2017, and is available at NordPool .
+Nordic region during 2017, and is available at [NordPool](https://www.nordpoolgroup.com/globalassets/marketdata-excel-files/elspot-prices_2017_hourly_eur.xls).
 
 Installation
 ------------
@@ -137,15 +137,7 @@ using LShapedSolvers
 
 The full installation procedure of Julia and all the required packages
 can be expected to take a while, up to a couple of hours on a bare
-setup. Finally, a public repository that contains auxilliary scripts and
-datasets that can be used to reproduce the results of the paper can be
-fetched through
-
-```
-
-  git clone
-  https://github.com/martinbiel/paw-atm-reproducibility.git
-```
+setup. This repository contains auxilliary files to simplify the reproducibility process.
 
 Experiment workflow
 -------------------
