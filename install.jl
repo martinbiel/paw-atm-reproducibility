@@ -5,7 +5,8 @@ Pkg.add("Parameters")
 Pkg.add("Reexport")
 Pkg.add("BenchmarkTools")
 Pkg.add("ProgressMeter")
-Pkg.add("Plots") # Requires matplotlib
+Pkg.add("Plots")
+Pkg.add("PyPlot") # Requires matplotlib
 Pkg.add("PlotRecipes")
 
 # Solvers (Gurobi requires license)

@@ -88,8 +88,7 @@ A docker image with all necessary binaries is available named `mbiel/paw-atm-rep
 docker run --interactive --tty mbiel/paw-atm-reproducibility
 ```
 
-After fetching the binaries a Julia prompt with all necessary libraries should appear, and one can proceed to follow the instructions in `reproducibility.jl`, i.e. the experiment workflow. Note, that it is not possible to redistribute Gurobi in docker, so the premade environment uses Clp instead. See the notes at the end of the document for a discussion of the consequences of using Clp.
-
+After fetching the binaries a Julia prompt with all necessary libraries should appear, and one can proceed to follow the instructions in `reproducibility.jl`, i.e. the experiment workflow. Note, that it is not possible to redistribute Gurobi in docker, so the premade environment uses Clp instead. See the notes at the end of the document for a discussion of the consequences of using Clp. All files in the docker image are laid out flat in one directory, so do not use `"results/"` and `"data/"` prefixes when loading files. Also, there is no GUI backend in docker, so plots will not actually be displayed. Figures can still be saved as pdfs through `savefig(plot(X),"X.pdf")`. The result benchmarks can be loaded and compared to new benchmarks directly in the Julia prompt as well.
 
 Installation (Manual)
 ------------
@@ -113,7 +112,10 @@ Pkg.add("PlotRecipes")
 Pkg.add("Plots")
 # Requires matplotlib
 Pkg.add("PyPlot")
+# Requires g++, make
 Pkg.add("Clp")
+# Requires libgmp-dev
+Pkg.add("GLPKMathProgInterface")
 # Requires Gurobi to be installed with a valid license
 Pkg.add("Gurobi")
 
@@ -203,7 +205,12 @@ save_results!(distributed_benchmark,"scaling_2.json")
 
 ```
 
-runs benchmarks of the distributed algorithms with two worker cores.
+runs benchmarks of the distributed algorithms with two worker cores. For small tests, individual models can be loaded and solved as follows:
+```julia
+nscen = 1000
+dayahead_model = load_model(nscen)
+HydroModels.plan!(dayahead_model,optimsolver=LShapedSolver(...))
+```
 
 Evaluation and expected result
 ------------------------------
@@ -244,4 +251,6 @@ observed if it is used as is. Successful results were obtained by
 choosing a lower presolve level in Clp. The reason for this is not
 known. To use Clp instead, replace each `GurobiSolver(OutputFlag=0)` in `dayahead_benchmark.jl`to `ClpSolver(Presolve=2)`. This yields a
 significant decrease in performance, so the presented computational
-results are not expected to be reproduced.
+results are not expected to be reproduced. Glpk can also be used, but it
+is even slower. The linearization option in the `:rd` and `:lv` solvers
+are not supported by Clp, but work with Glpk.

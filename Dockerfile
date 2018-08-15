@@ -1,6 +1,6 @@
 FROM  julia:0.6.4
 RUN   apt-get update
-RUN   apt-get install -y g++ libopenblas-base make python3
+RUN   apt-get install -y g++ libopenblas-base make python3 libgmp-dev
 COPY  data results dayahead_benchmark.jl reproducibility.jl $HOME/
 RUN   julia --eval 'Pkg.add("JuMP");\
 		    Pkg.add("MacroTools");\
@@ -9,7 +9,9 @@ RUN   julia --eval 'Pkg.add("JuMP");\
 		    Pkg.add("BenchmarkTools");\
 		    Pkg.add("ProgressMeter");\
 		    Pkg.add("Plots");\
+		    Pkg.add("PyPlot");\
 		    Pkg.add("PlotRecipes");\
+		    Pkg.add("GLPKMathProgInterface");\
 		    Pkg.add("Clp")'
 RUN   julia --eval 'Pkg.clone("https://github.com/martinbiel/TraitDispatch.jl.git");\
 		    Pkg.clone("https://github.com/martinbiel/StochasticPrograms.jl.git");\
