@@ -88,7 +88,7 @@ A docker image with all necessary binaries is available named `mbiel/paw-atm-rep
 docker run --interactive --tty mbiel/paw-atm-reproducibility
 ```
 
-After fetching the binaries a Julia prompt with all necessary libraries should appear, and one can proceed to following the instructions in `reproducibility.jl`, i.e. the experiment workflow. Note, that it is not possible to redistribute Gurobi in docker, so the premade environment uses Clp instead. See the notes at the end of the document for a discussion of the consequences of using Clp.
+After fetching the binaries a Julia prompt with all necessary libraries should appear, and one can proceed to follow the instructions in `reproducibility.jl`, i.e. the experiment workflow. Note, that it is not possible to redistribute Gurobi in docker, so the premade environment uses Clp instead. See the notes at the end of the document for a discussion of the consequences of using Clp.
 
 
 Installation (Manual)
