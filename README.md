@@ -7,7 +7,7 @@ Abstract
 The following appendix describes the dependencies and experimental setup
 used to generate the numerical results presented in the work titled **Distributed L-shaped Algorithms in Julia**.
 Specifically, the generation of
-Fig.2, Fig.3 and Fig.4 is outlined to an extent where it should be possible to reproduce the
+Fig. 2, Fig. 3 and Fig. 4 is outlined to an extent where it should be possible to reproduce the
 results, assuming similar hardware is available.
 
 Description
@@ -150,12 +150,7 @@ fetched through
 Experiment workflow
 -------------------
 
-To reproduce the results presented in
-Fig. <a href="#fig:serial_benchmarks" data-reference-type="ref" data-reference="fig:serial_benchmarks">[fig:serial_benchmarks]</a>,
-Fig. <a href="#fig:strong_scaling_comptime" data-reference-type="ref" data-reference="fig:strong_scaling_comptime">[fig:strong_scaling_comptime]</a>
-and
-Fig. <a href="#fig:strong_scaling_efficiency" data-reference-type="ref" data-reference="fig:strong_scaling_efficiency">[fig:strong_scaling_efficiency]</a>,
-follow the instructions in . In summary, the workflow is as follows:
+To reproduce the results presented in Fig. 2, Fig. 3 and Fig. 4, run the code blocks in `reproducibility.jl`. In summary, the workflow is as follows:
 
 ``` julia
 include("dayahead_benchmark.jl")
@@ -186,7 +181,7 @@ runs the benchmark and saves the results. This is a lengthy process
 which typically takes hours. For each problem size, the benchmark has
 each algorithm solving the problem about 100 times and samples the
 required computation time. For distributed benchmarks, Julia processes
-have to be added to create worker cores through . For example,
+have to be added to create worker cores through `addprocs`. For example,
 
 ``` julia
 addprocs(2)
@@ -203,26 +198,22 @@ runs benchmarks of the distributed algorithms with two worker cores.
 Evaluation and expected result
 ------------------------------
 
-Following the instructions in should produce results akin to the ones
-presented in
-Fig. <a href="#fig:serial_benchmarks" data-reference-type="ref" data-reference="fig:serial_benchmarks">[fig:serial_benchmarks]</a>,
-Fig. <a href="#fig:strong_scaling_comptime" data-reference-type="ref" data-reference="fig:strong_scaling_comptime">[fig:strong_scaling_comptime]</a>
-and
-Fig. <a href="#fig:strong_scaling_efficiency" data-reference-type="ref" data-reference="fig:strong_scaling_efficiency">[fig:strong_scaling_efficiency]</a>.
+Following the instructions in `reproducibility.jl` should produce results akin to the ones
+presented in Fig. 2, Fig. 3, and Fig. 4.
 
 Experiment customization
 ------------------------
 
 The serial and distributed L-shaped algorithms evaluated in the
-benchmarks are created in the functions and . The keyword arguments
+benchmarks are created in the functions `prepare_sbenchmark` and `prepare_dbenchmark`. The keyword arguments
 supplied to the solver calls can be changed for experiment
-customization. For example, removing the in the creation will revert to
-using a 2-norm term in the level-set solver. Use in the Julia prompt
-after for helper documentation that explains how to create and
+customization. For example, removing the `linearize=true` in the `lv` creation will revert to
+using a 2-norm term in the level-set solver. Use `?LShapedSolver` in the Julia prompt
+after `using LShapedSolvers` for helper documentation that explains how to create and
 parametrize L-shaped solvers. For information about the the tunable
 parameters, and their default values, each algorithm has a separate
-docstring accessible through . For example, . All available docstrings
-are listed by .
+docstring accessible through `?`. For example, run `?LShaped`. All available docstrings
+are listed by `?LShapedSolver`.
 
 Notes
 -----
@@ -231,6 +222,6 @@ If a Gurobi license is not available, the open-source Clp solver could
 be used as a subsolver instead. However, convergence issues have been
 observed if it is used as is. Successful results were obtained by
 choosing a lower presolve level in Clp. The reason for this is not
-known. To use Clp instead, replace each in to . This yields a
+known. To use Clp instead, replace each `GurobiSolver(OutputFlag=0)` in `dayahead_benchmark.jl`to `ClpSolver(Presolve=2)`. This yields a
 significant decrease in performance, so the presented computational
 results are not expected to be reproduced.
