@@ -155,14 +155,7 @@ using LShapedSolvers
 
 The full installation procedure of Julia and all the required packages
 can be expected to take a while, up to a couple of hours on a bare
-setup. It is recommended to run the package tests to ensure that everything is working:
-``` julia
-Pkg.test("StochasticPrograms")
-Pkg.test("LShapedSolvers")
-
-```
-
-This repository contains auxilliary files to simplify the reproducibility process.
+setup. This repository contains auxilliary files to simplify the reproducibility process.
 
 Experiment workflow
 -------------------
