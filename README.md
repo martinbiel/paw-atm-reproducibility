@@ -8,7 +8,7 @@ The following appendix describes the dependencies and experimental setup
 used to generate the numerical results presented in the work titled **Distributed L-shaped Algorithms in Julia**.
 Specifically, the generation of
 Fig. 2, Fig. 3 and Fig. 4 is outlined to an extent where it should be possible to reproduce the
-results, assuming similar hardware is available.
+results, assuming similar hardware is available. The dependencies can either be installed by following the instructions outlined here, or by mounting a predefined docker file.
 
 Description
 -----------
@@ -62,19 +62,36 @@ cores in total) with the following specifications.
 
 -   Julia v0.6.4
 
+-   g++
+
+-   make
+
 -   Python 3.6.6 with matplotlib 2.2.2
 
 -   Gurobi 7.0.2
+
+-   Docker (optionally)
 
 ### Datasets
 
 Two datasets were used. First, `plantdata.csv` contains physical
 specifications for the hydroplants in the river Skellefteälven. This
-data was first published in , in Table 1 and Table 2. Second,
-`spotprices.csv` contains the hourly market price of electricity in the
-Nordic region during 2017, and is available at [NordPool](https://www.nordpoolgroup.com/globalassets/marketdata-excel-files/elspot-prices_2017_hourly_eur.xls).
+data was first published in the following [Master thesis](http://kth.diva-portal.org/smash/record.jsf?pid=diva2%3A1215858&dswid=8071), in Table 1 and Table 2. Second, `spotprices.csv` should contain the hourly market price of electricity in the
+Nordic region during 2017. This data is available at [NordPool](https://www.nordpoolgroup.com/globalassets/marketdata-excel-files/elspot-prices_2017_hourly_eur.xls). Note, that line 2022 has no price data. Either remove this line or interpolate from the surrounding data. Alternatively, the `spotprices.csv` in this repository contains dummy data that can be used instead.
 
-Installation
+Installation (Docker)
+------------
+
+A docker image with all necessary binaries is available named `mbiel/paw-atm-reproducibility`. To use it, install docker. Next, run
+
+```
+docker run --interactive --tty mbiel/paw-atm-reproducibility
+```
+
+After fetching the binaries a Julia prompt with all necessary libraries should appear, and one can proceed to following the instructions in `reproducibility.jl`, i.e. the experiment workflow. Note, that it is not possible to redistribute Gurobi in docker, so the premade environment uses Clp instead. See the notes at the end of the document for a discussion of the consequences of using Clp.
+
+
+Installation (Manual)
 ------------
 
 The numerical experiments were performed on Julia version v0.6.4,
@@ -106,7 +123,8 @@ The plots in this work were generated with the PyPlot backend, which
 requires matplotlib to be installed. A Clp binary will be installed
 automatically by the above command. However, all results in this work
 were generated using Gurobi version 7.0.2, which needs to be installed
-separately along with a valid license. The user made Julia modules used
+separately along with a valid license. Gurobi has free licenses available
+for academic users. The user made Julia modules used
 to generate the results in this work are installed as follows:
 
 ``` julia
@@ -137,7 +155,14 @@ using LShapedSolvers
 
 The full installation procedure of Julia and all the required packages
 can be expected to take a while, up to a couple of hours on a bare
-setup. This repository contains auxilliary files to simplify the reproducibility process.
+setup. It is recommended to run the package tests to ensure that everything is working:
+``` julia
+Pkg.test("StochasticPrograms")
+Pkg.test("LShapedSolvers")
+
+```
+
+This repository contains auxilliary files to simplify the reproducibility process.
 
 Experiment workflow
 -------------------
