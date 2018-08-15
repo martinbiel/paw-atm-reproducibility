@@ -191,7 +191,7 @@ Evaluation and expected result
 ------------------------------
 
 Following the instructions in `reproducibility.jl` should produce results akin to the ones
-presented in Fig. 2, Fig. 3, and Fig. 4. These results are available as JSON files in the results folder of the paw-atm-reproducibility repository as well. The presented results can be regenerated as follows
+presented in Fig. 2, Fig. 3, and Fig. 4. These results are available as JSON files in the results folder as well. The presented results can be regenerated as follows
 ``` julia
 using Plots
 pyplot()
